@@ -10055,11 +10055,23 @@ PERFORMANCE OF THIS SOFTWARE.
         const filterCatalog = document.querySelector(".filter-category");
         if (filterCatalog) {
             const filterCatalogHead = document.querySelector(".filter-category__head");
+            const filterCatalogSelected = document.querySelector(".filter-category__head span");
             const filterCatalogList = document.querySelector(".filter-category__list");
+            const filterCatalogItem = document.querySelectorAll(".filter-category__list li");
             _slideUp(filterCatalogList);
             filterCatalogHead.addEventListener("click", (function() {
                 filterCatalogHead.classList.toggle("_active");
                 _slideToggle(filterCatalogList);
+            }));
+            filterCatalogItem.forEach((item => {
+                item.addEventListener("click", (function() {
+                    const prevActiveItem = document.querySelector(".filter-category__list li._active");
+                    if (prevActiveItem) prevActiveItem.classList.remove("_active");
+                    item.classList.add("_active");
+                    filterCatalogSelected.textContent = item.textContent;
+                    filterCatalogHead.classList.remove("_active");
+                    _slideUp(filterCatalogList, 0);
+                }));
             }));
         }
         function createLazyLinePainter(selector, delay = 0) {
